@@ -12,8 +12,22 @@ BACKEND
 2. made a virtual env
     python -m venv venv 
     venv\Scripts\activate
-3.  -->
 
+STEP 1: EMBEDDINGS
+Link: https://www.sbert.net/docs/sentence_transformer/usage/semantic_textual_similarity.html
+1. import sentence transformer 
+2. then load a model 
+3. make an array of sentences 
+4. encode the sentences into embeddings 
+5. pass the embeddings to similarity for comparison 
+
+STEP 2: PDF EXTRACTION + CHUNKING 
+Link: https://pymupdf.readthedocs.io/en/latest/the-basics.html
+1. if we make an embessing of the entire pdf that may create one vector that blurs every topic together; chunking helps us make more focused embeddings to improve search precision. 
+2. we using overlapping to ensure that information doesn't get severed/cut off at the chunk boundary (incomplete sentences)
+3. we call RecursiveCharacterTextSplitter  to cut on natural boundaries (paras, sentences then words) to keep things semantically coherent
+
+STEP 3: Chunking using the RecursiveCharacterTextSplitter
 
 BRANCHING 
 
