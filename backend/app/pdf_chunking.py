@@ -1,7 +1,13 @@
 import pymupdf
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 # Step 1: Open a document
-doc = pymupdf.open("pdf-chatbot\backend\test.pdf")
+doc = pymupdf.open("test.pdf")
+
+if doc:
+    print(f"Document opened successfully: {doc}")
+else:
+    print("Failed to open the document.")
 
 # Step 2: Extract text from a PDF
 out = open("output.txt", "wb")
@@ -15,3 +21,11 @@ for page in doc:
     # write page delimiter
     out.write(bytes((12,))) 
 out.close()
+
+print("Iterated through the document and extracted text successfully.")
+
+# Step 4: Call LangChain RecursiveCharacterTextSplitter to split the text into chunks
+text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
+texts = text_splitter.split_text(open("output.txt", "r", encoding="utf8").read())
+print(f"Number of chunks: {len(texts)}")
+# print(texts[0]) # print the first chunk
