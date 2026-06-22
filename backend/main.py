@@ -12,6 +12,7 @@ UPLOAD_DIR = os.path.join(BASE_DIR, "data", "uploads")
 
 class Prompt(BaseModel):
     message: str
+    file: str
 
 @app.post("/upload")
 async def create_upload_file(file: UploadFile):
@@ -25,8 +26,8 @@ async def create_upload_file(file: UploadFile):
         f.write(contents)
 
     chunks = pdf_chunking(save_path)
-    vector_store = create_vector_store(chunks)
-    return {"message": "File uploaded and processed successfully."}
+    vector_store = create_vector_store(chunks, file.filename)
+    return file.filename
 
 @app.post("/chat")
 async def chat_response(prompt: Prompt): 
@@ -35,5 +36,5 @@ async def chat_response(prompt: Prompt):
 
     vector_store = load_vector_store()
 
-    response = rag_chain_pipeline(vector_store, prompt.message)
+    response = rag_chain_pipeline(vector_store, prompt.message, prompt.file)
     return response

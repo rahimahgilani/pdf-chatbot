@@ -5,7 +5,7 @@ from app.embeddings import get_embeddings
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CHROMA_DIR = os.path.join(BASE_DIR, "data", "chroma_db")
 
-def create_vector_store(chunks):
+def create_vector_store(chunks, filename):
     # print(f"Using chroma dir: {CHROMA_DIR}")
     embeddings = get_embeddings()
     
@@ -15,7 +15,7 @@ def create_vector_store(chunks):
         persist_directory=CHROMA_DIR,
     )
     
-    vector_store.add_texts(chunks)
+    vector_store.add_texts(chunks, metadatas=[{"source": filename} for _ in chunks])
     
     return vector_store
 
