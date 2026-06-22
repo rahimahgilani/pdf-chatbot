@@ -4,11 +4,9 @@ from langchain.messages import HumanMessage
 
 load_dotenv()
 
-def rag_chain_pipeline(vector_store, question):
+def rag_chain_pipeline(vector_store, question, filename):
     # Step 1: Querying the collection by turning it into a retriever
-    retriever = vector_store.as_retriever(
-        search_type="mmr", search_kwargs={"k": 1, "fetch_k": 5}
-    )
+    retriever = vector_store.as_retriever(search_kwargs={"filter": {"source": filename}})
 
     text = retriever.invoke(question)
 
