@@ -3,9 +3,23 @@ from pydantic import BaseModel
 from app.pdf_processor import pdf_chunking
 from app.rag_chain import rag_chain_pipeline
 from fastapi import FastAPI, UploadFile, File
+from fastapi.middleware.cors import CORSMiddleware
 from app.vector_store import create_vector_store, load_vector_store
 
 app = FastAPI()
+
+origins = [
+    "http://localhost:8080",
+    "http://localhost:5173/"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 UPLOAD_DIR = os.path.join(BASE_DIR, "data", "uploads")
