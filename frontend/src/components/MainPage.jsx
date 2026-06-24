@@ -85,16 +85,6 @@ const MainPage = () => {
 
   return (
     <div className="main-page">
-      <div className="upper-main">
-        <button className="download-pdf" onClick={() => navigate("/chat-pdf")}>
-          <img className="pdf-icon" src={pdf_icon} alt="pdf-icon" />
-        </button>
-      </div>
-      <div className="side-panel-main">
-        <button className="open-panel">
-          Open Panel
-        </button>
-      </div>
       <div className="lower-main">
         <div className="conversation">
           {messages.map((msg, index) => (
