@@ -30,4 +30,4 @@ def rag_chain_pipeline(vector_store, question, filename):
     )
 
     response = llm.invoke([message])
-    return response
+    return response.content
